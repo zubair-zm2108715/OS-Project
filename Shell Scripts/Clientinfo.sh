@@ -3,12 +3,17 @@
 # clientinfo.sh - Script to gather and transfer system information hourly
 
 # Configuration
-SERVER_USER=""  # Replace with your server username
+SERVER_USER="vm1"  # Replace with your server username
 SERVER_IP=""    # Replace with your server IP
 LOCAL_LOG="process_info.log"
 REMOTE_PATH="/home/$SERVER_USER/client_logs"
 TIMESTAMP=$(date '+%Y-%m-%d_%H-%M-%S')
 REMOTE_FILE="process_info_${TIMESTAMP}.log"
+
+# Prompt for server IP if not set
+if [ -z "$SERVER_IP" ]; then
+    read -p "Enter the server IP: " SERVER_IP
+fi
 
 # Function to gather process tree
 get_process_tree() {

@@ -5,9 +5,14 @@
 # Constants
 MAX_ATTEMPTS=3
 LOG_FILE="invalid_attempts.log"
-SERVER_USER="" # Replace with your server username
-SERVER_IP=""   # Replace with your server IP
+SERVER_USER="vm1" 
+SERVER_IP=""
 REMOTE_LOG_PATH="/home/$SERVER_USER/client_timestamp_invalid_attempts.log"
+
+# Prompt for server IP if not set
+if [ -z "$SERVER_IP" ]; then
+    read -p "Enter the server IP: " SERVER_IP
+fi
 
 # Function to log invalid attempts
 log_invalid_attempt() {
@@ -36,11 +41,10 @@ attempt_count=0
 while [ $attempt_count -lt $MAX_ATTEMPTS ]; do
     # Prompt for credentials
     read -p "Username: " username
-    read -s -p "Password: " password
     echo
 
     # Attempt SSH login (using sshpass to automate password entry)
-    if sshpass -p "$password" ssh -o StrictHostKeyChecking=no "$username@$SERVER_IP" 'exit'; then
+    if ssh -o StrictHostKeyChecking=no "$username@$SERVER_IP" 'exit'; then
         echo "Login successful!"
         exit 0
     else
