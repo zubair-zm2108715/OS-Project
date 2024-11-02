@@ -5,15 +5,15 @@ DISK_LOG="disk_info.log"
 MEM_CPU_LOG="mem_cpu_info.log"
 
 # Get disk usage information for the HOME directory
-echo "=== Disk Usage Information for HOME Directory ===" | tee -a $DISK_LOG
+echo "=== Disk Usage Information for HOME Directory ===\n" | tee -a $DISK_LOG
 du -h --max-depth=1 "$HOME" | tee -a $DISK_LOG
 
 # Show overall disk space information
-echo -e "\n=== Overall Disk Space Information ===" | tee -a $DISK_LOG
+echo -e "=== Overall Disk Space Information ===\n" | tee -a $DISK_LOG
 df -h "$HOME" | tee -a $DISK_LOG
 
 # Get memory and CPU information
-echo -e "\n=== Memory and CPU Information ===" | tee -a $MEM_CPU_LOG
+echo -e "=== Memory and CPU Information ===" | tee -a $MEM_CPU_LOG
 
 # Get used and free memory percentage
 free_memory=$(free | grep Mem | awk '{print $4}')
